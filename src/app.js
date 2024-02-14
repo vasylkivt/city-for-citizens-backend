@@ -20,10 +20,10 @@ const { assertDatabaseConnectionOk } = require('./models');
 
 const app = express();
 
-const keys = {
-  key: fs.readFileSync(process.env.KEY_PATH),
-  cert: fs.readFileSync(process.env.CERT_PATH),
-};
+// const keys = {
+//   key: fs.readFileSync(process.env.KEY_PATH),
+//   cert: fs.readFileSync(process.env.CERT_PATH),
+// };
 
 const PORT = process.env.PORT || 4000;
 
@@ -77,8 +77,8 @@ app.use((err, req, res, next) => {
 
 async function init() {
   await assertDatabaseConnectionOk();
-  const server = https.createServer(keys, app);
-  server.listen(PORT, () => console.log(`Server started at port:${PORT}`));
+  // const server = https.createServer(keys, app);
+  app.listen(PORT, () => console.log(`Server started at port:${PORT}`));
 }
 
 init();
