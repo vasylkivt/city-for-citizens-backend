@@ -34,7 +34,7 @@ const specs = swaggerJsdoc(swaggerOptions);
 app.use(logger(formatsLogger));
 app.use(cookieParser());
 
-const allowedOrigins = [process.env.CLIENT_URL1, process.env.CLIENT_URL2];
+const allowedOrigins = [process.env.CLIENT_URL1, process.env.CLIENT_URL2,process.env.CLIENT_URL3];
 
 app.use(
   cors({
