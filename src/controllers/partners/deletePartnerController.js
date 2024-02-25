@@ -15,14 +15,28 @@ const deletePartnerController = ctrlWrapper(async (req, res) => {
     return res.status(404).json({ error: 'Partner not found' });
   }
 
-  const fileName = existingPartner.image;
+    try{
+     const fileName = existingPartner.image;
 
   if (fileName) {
     const filePath = path.join(DIR_PARTNERS_IMAGES, fileName);
     await fs.unlink(filePath);
   }
+  }catch{
+    console.error('Image not deleted')
+  }finally{
+      await existingPartner.destroy();
+  }
 
-  await existingPartner.destroy();
+
+  // const fileName = existingPartner.image;
+
+  // if (fileName) {
+  //   const filePath = path.join(DIR_PARTNERS_IMAGES, fileName);
+  //   await fs.unlink(filePath);
+  // }
+
+  // await existingPartner.destroy();
 
   res.status(200).json({ message: 'Partner successfully deleted' });
 });
