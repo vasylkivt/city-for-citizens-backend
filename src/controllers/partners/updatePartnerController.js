@@ -26,19 +26,37 @@ const updatePartnerController = ctrlWrapper(async (req, res, next) => {
 
     await fs.writeFile(filePath, imageBuffer);
 
-    if (existingPartner.image) {
+    try{
+      if (existingPartner.image) {
       const previousImagePath = path.join(
         DIR_PARTNERS_IMAGES,
         existingPartner.image
       );
       await fs.unlink(previousImagePath);
     }
-
-    await existingPartner.update({
+      
+    }catch{
+      console.log('Image not deleted)
+    }finally{
+      await existingPartner.update({
       name: req.body.name || existingPartner.name,
       link: req.body.link || existingPartner.link,
       image: fileName,
     });
+    }
+    // if (existingPartner.image) {
+    //   const previousImagePath = path.join(
+    //     DIR_PARTNERS_IMAGES,
+    //     existingPartner.image
+    //   );
+    //   await fs.unlink(previousImagePath);
+    // }
+
+    // await existingPartner.update({
+    //   name: req.body.name || existingPartner.name,
+    //   link: req.body.link || existingPartner.link,
+    //   image: fileName,
+    // });
   } else {
     await existingPartner.update({
       name: req.body.name || existingPartner.name,
