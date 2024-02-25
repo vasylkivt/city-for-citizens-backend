@@ -26,6 +26,8 @@ const updatePartnerController = ctrlWrapper(async (req, res, next) => {
 
     await fs.writeFile(filePath, imageBuffer);
 
+    let successMessage = 'Partner successfully deleted';
+
     try{
       if (existingPartner.image) {
       const previousImagePath = path.join(
@@ -36,7 +38,8 @@ const updatePartnerController = ctrlWrapper(async (req, res, next) => {
     }
       
     }catch{
-      console.log('Image not deleted)
+
+       successMessage = 'Partner updated, but failed to delete image';
     }finally{
       await existingPartner.update({
       name: req.body.name || existingPartner.name,
@@ -64,7 +67,7 @@ const updatePartnerController = ctrlWrapper(async (req, res, next) => {
     });
   }
 
-  res.status(200).json({ message: 'Partner updated successfully' });
+  res.status(200).json({ message: successMessage });
 });
 
 module.exports = updatePartnerController;
