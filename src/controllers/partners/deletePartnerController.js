@@ -15,6 +15,8 @@ const deletePartnerController = ctrlWrapper(async (req, res) => {
     return res.status(404).json({ error: 'Partner not found' });
   }
 
+    let successMessage = 'Partner successfully deleted';
+
     try{
      const fileName = existingPartner.image;
 
@@ -23,7 +25,7 @@ const deletePartnerController = ctrlWrapper(async (req, res) => {
     await fs.unlink(filePath);
   }
   }catch{
-    console.error('Image not deleted')
+successMessage = 'Partner deleted, but failed to delete image'; 
   }finally{
       await existingPartner.destroy();
   }
@@ -38,7 +40,7 @@ const deletePartnerController = ctrlWrapper(async (req, res) => {
 
   // await existingPartner.destroy();
 
-  res.status(200).json({ message: 'Partner successfully deleted' });
+  res.status(200).json({ message: successMessage });
 });
 
 module.exports = deletePartnerController;
