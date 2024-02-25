@@ -15,6 +15,8 @@ const updatePartnerController = ctrlWrapper(async (req, res, next) => {
     return res.status(404).json({ message: 'Partner not found' });
   }
 
+     let successMessage = 'Partner successfully updated!';
+
   if (req.file) {
     await imageProcessing(req, res, next);
 
@@ -26,7 +28,7 @@ const updatePartnerController = ctrlWrapper(async (req, res, next) => {
 
     await fs.writeFile(filePath, imageBuffer);
 
-    let successMessage = 'Partner successfully deleted';
+ 
 
     try{
       if (existingPartner.image) {
